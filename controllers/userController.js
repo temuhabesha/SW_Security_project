@@ -1,5 +1,6 @@
 // module importing starting point
 const mysql = require('mysql2')
+const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 // module importing ending point
 
@@ -29,7 +30,10 @@ async function register(req,res){
     if(password.length<6){
        return res.send('the password at least 8 characters')
     }
-         db_connection.query('INSERT INTO system_users (username,firstname,lastname,email,password) VALUES (?,?,?,?,?)',[username,firstname,lastname,email,password])
+
+    const salt = await bcrypt.genSalt(10)
+    const hashedpassword = await bcrypt.hash(password,salt)
+         db_connection.query('INSERT INTO system_users (username,firstname,lastname,email,password) VALUES (?,?,?,?,?)',[username,firstname,lastname,email,hashedpassword])
         return res.send('the user is registered')
    } catch (error) {
     return res.send(error)
