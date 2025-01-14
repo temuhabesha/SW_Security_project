@@ -2,6 +2,7 @@
 const express = require('express')
 const userRoutes = require('./routs/userRouts')
 const cors = require('cors')
+const cookieparser = require('cookie-parser')
 // module importing ending point
 
 const app = express();

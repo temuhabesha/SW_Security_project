@@ -1,5 +1,6 @@
 // module importing starting point
 const mysql = require('mysql2')
+const jwt = require('jsonwebtoken')
 // module importing ending point
 
 //database connectivity
@@ -15,10 +16,10 @@ const db_connection = mysql.createConnection({
 // regstration function starting point
 async function register(req,res){
     const {username,firstname,lastname,email,password} = req.body;
-
    if(!username || !firstname || !lastname || !email || !password){
     return res.send('please enter all fields')
    }
+   
    
    try {
     const [result] = await db_connection.query('SELECT username,id FROM system_users WHERE username=? or email=?',[username,email])
@@ -33,10 +34,7 @@ async function register(req,res){
    } catch (error) {
     return res.send(error)
    }
-         
-       
-        
-    
+ 
 }
 
 async function login(req,res) {
@@ -56,6 +54,7 @@ async function login(req,res) {
     else{
         return res.send('invalid cridential')
     }
+   
    }
     catch (error) {
     return res.send(error)
