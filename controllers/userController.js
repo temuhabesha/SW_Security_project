@@ -1,16 +1,11 @@
 // module importing starting point
-const mysql = require('mysql2')
+const db_connection = require('../config/db_config')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 // module importing ending point
 
 //database connectivity
-const db_connection = mysql.createConnection({
-    host:"localhost",
-    database:"sw_security_db",
-    user:"sw_security_db_admin",
-    password:"12345"
-}).promise()
+
 
 
 
